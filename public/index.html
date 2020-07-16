@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>My Website!</title>
+</head>
+
+<body>
+    <div class="main--container">
+        <h1>Welcome to my website!</h1>
+        <h2>Here are the list of my users</h2>
+        <div id="user--container">
+
+        </div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+//Selecting parent container for incoming data to render(show on page)
+const userContainer = document.querySelector("#user--container")
+
+//CreateNode('div') => div will show on my website
+const createNode = (element) => {
+    return document.createElement(element)
+}
+
+const append = (parent, child) => {
+    return parent.appendChild(child)
+}
+
+window.onload = fetchAPI = () => {
+    fetch("/api/users")
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        return data.map((item) => {
+            let userCard = createNode('div')
+            let name = createNode('h3')
+            let email = createNode('p')
+
+            name.innerText = `${item.username}`
+            email.innerText = `${item.email}`
+
+            append(userContainer, userCard)
+            append(userCard, name)
+            append(userCard, email)
+        })
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
+</script>
+
+</html>
